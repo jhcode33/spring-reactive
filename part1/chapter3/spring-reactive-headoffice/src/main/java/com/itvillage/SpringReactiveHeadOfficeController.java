@@ -39,6 +39,7 @@ public class SpringReactiveHeadOfficeController {
                 .encode()
                 .toUri(); // http://localhost:5050/v1/books/{book-id}
 
+        // publisher, .subscrib() 메소드를 spring boot가 자동으로 호출
         return WebClient.create()
                 .get()
                 .uri(getBookUri)

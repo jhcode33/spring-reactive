@@ -42,9 +42,12 @@ public class SpringMvcHeadOfficeApplication {
         return (String... args) -> {
             log.info("# 요청 시작 시간: {}", LocalTime.now());
 
+            // 동기 + Blocking
+            // 동기이기 때문에 순차적으로 처리함
+            // 5번 가져와지는데, blocking이기 때문에 5초 간격으로 가져와짐
             for (int i = 1; i <= 5; i++) {
                 Book book = this.getBook(i);
-                log.info("{}: book name: {}", LocalTime.now(), book.getName());
+                log.info("# 요청 도착 시간: {} : book name: {}", LocalTime.now(), book.getName());
             }
         };
     }

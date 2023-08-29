@@ -28,6 +28,8 @@ public class SpringMvcBranchOfficeController {
     @GetMapping("/{book-id}")
     public ResponseEntity<Book> getBook(@PathVariable("book-id") long bookId)
             throws InterruptedException {
+
+        // blocking to header
         Thread.sleep(5000);
 
         Book book = bookMap.get(bookId);
