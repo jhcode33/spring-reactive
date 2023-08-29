@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
  */
 public class Example6_1 {
     public static void main(String[] args) {
+        // Mono : 0 or 1
         Mono.just("Hello Reactor")
                 .subscribe(System.out::println);
     }

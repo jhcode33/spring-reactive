@@ -9,11 +9,17 @@ import reactor.core.publisher.Mono;
  */
 public class Example6_2 {
     public static void main(String[] args) {
+        // Mono는 데이터가 없을 수도 있다
         Mono
             .empty()
             .subscribe(
+                    // onNext(), 데이터가 없으면 onNext()를 호출하지 않는다
                     none -> System.out.println("# emitted onNext signal"),
-                    error -> {},
+
+                    // onError(), 데이터 전송 중 오류가 아니기 때문에 Error도 호출하지 않는다
+                    error -> System.out.println("# emitted onError signal"),
+
+                    // onComplete(), 전송한 데이터가 없기 때문에 완료라고 뜬다
                     () -> System.out.println("# emitted onComplete signal")
             );
     }

@@ -33,6 +33,7 @@ public class Example6_3 {
 
 
         Mono.just(
+                // data로 restTemplate을 통해 반환받은 ResponseEntity<> 객체를 넣은 것임.
                     restTemplate
                             .exchange(worldTimeUri,
                                     HttpMethod.GET,

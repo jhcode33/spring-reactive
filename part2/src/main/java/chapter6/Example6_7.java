@@ -12,6 +12,7 @@ public class Example6_7 {
                         Flux.just("Mars", "Jupiter", "Saturn"),
                         Flux.just("Uranus", "Neptune", "Pluto"))
                 .collectList()
+                // planets = Mono<List>
                 .subscribe(planets -> System.out.println(planets));
     }
 }

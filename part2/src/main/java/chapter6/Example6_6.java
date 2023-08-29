@@ -10,7 +10,8 @@ public class Example6_6 {
     public static void main(String[] args) {
         Flux<String> flux =
                 Mono.justOrEmpty("Steve")
-                        .concatWith(Mono.justOrEmpty("Jobs"));
+                        .concatWith(Flux.just("Jobs", "Kris"));
+                                //Mono.justOrEmpty("Jobs"));
         flux.subscribe(System.out::println);
     }
 }
