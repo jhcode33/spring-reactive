@@ -17,7 +17,9 @@ public class Example7_2 {
         Flux<String> concertFlux =
                 Flux
                     .fromArray(singers)
+                    // parallel default Scheduler
                     .delayElements(Duration.ofSeconds(1))
+                    // Returns a new Flux that multicasts (shares) the original Flux.
                     .share();
 
         concertFlux.subscribe(

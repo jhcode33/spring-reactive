@@ -20,6 +20,9 @@ public class Example7_3 {
                 .encode()
                 .toUri();
 
+        // 두번 호출됨, why?
+        // -> getWorldTime() 메소드로 반환된 것은 Mono publisher이다.
+        // publisher은 실제 .subscribe() 메소드를 통해 구독하고, onNext() 메소드가 실행되야지, 수행한다
         Mono<String> mono = getWorldTime(worldTimeUri);
         mono.subscribe(dateTime -> log.info("# dateTime 1: {}", dateTime));
         Thread.sleep(2000);
@@ -29,6 +32,8 @@ public class Example7_3 {
     }
 
     private static Mono<String> getWorldTime(URI worldTimeUri) {
+
+        // publisher이기 때문에 .subscribe() 메소드를 실행해야지 실제 요청이 들어간다
         return WebClient.create()
                 .get()
                 .uri(worldTimeUri)
