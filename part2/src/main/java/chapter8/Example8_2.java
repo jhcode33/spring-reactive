@@ -21,7 +21,9 @@ public class Example8_2 {
             .subscribe(data -> {
                         try {
                             Thread.sleep(5L);
-                        } catch (InterruptedException e) {}
+                        } catch (InterruptedException e) {
+                            e.getMessage();
+                        }
                         log.info("# onNext: {}", data);
                     },
                     error -> log.error("# onError", error));

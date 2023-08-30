@@ -18,11 +18,14 @@ public class Example8_5 {
         Flux
             .interval(Duration.ofMillis(300L))
             .doOnNext(data -> log.info("# emitted by original Flux: {}", data))
+
             .onBackpressureBuffer(2,
                     dropped -> log.info("** Overflow & Dropped: {} **", dropped),
                     BufferOverflowStrategy.DROP_LATEST)
+
             .doOnNext(data -> log.info("[ # emitted by Buffer: {} ]", data))
             .publishOn(Schedulers.parallel(), false, 1)
+
             .subscribe(data -> {
                         try {
                             Thread.sleep(1000L);
