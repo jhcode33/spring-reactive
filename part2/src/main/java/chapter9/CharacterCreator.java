@@ -9,6 +9,10 @@ public class CharacterCreator {
     public Consumer<List<Character>> consumer; // consumer -> captured variable
 
     public Flux<Character> createCharacterSequence() {
-        return Flux.create(sink -> CharacterCreator.this.consumer = items -> items.forEach(sink::next));
+        // multi-thread, async
+        return Flux.create(sink -> CharacterCreator.this.consumer =
+                                            // accept() method body
+                                            // items = sequence1 and sequence2
+                                            items -> items.forEach(sink::next));
     }
 }

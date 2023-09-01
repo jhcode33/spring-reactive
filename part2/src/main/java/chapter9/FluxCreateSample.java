@@ -13,6 +13,8 @@ public class FluxCreateSample {
     //   1. Flux.create()를 호출하면서 FluxSink를 처리하는 람다나 메소드 레퍼런스를 제공합니다.
     //   2. FluxSink의 next(), error(), complete() 메소드를 사용하여 이벤트를 방출합니다.
     public static void main(String[] args) {
+
+        // Asynchronous
         Flux<String> dynamicFlux = Flux.create(sink -> {
             sink.next("Hello");
             sink.next("World");

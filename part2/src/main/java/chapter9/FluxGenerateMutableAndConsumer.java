@@ -20,7 +20,15 @@ public class FluxGenerateMutableAndConsumer {
                     if (i == 10) sink.complete();
                     return state; // (3)
                 },
-                (state) -> System.out.println("state: " + state));
+                // stateConsumer
+                (state) -> {
+                    System.out.println("state: " + state);
+                    System.out.println(("finalState: " + finalState));
+                });
+
+        flux.subscribe(data -> log.info("# onNext: {}", data), // 15:58:13.329 [main] INFO - # onNext: 3 x 10 = 30
+                error -> log.info("# onError: {}", error.getMessage()),
+                () -> log.info("# onComplete")); // 15:58:13.331 [main] INFO - # onComplete
 
         flux.subscribe(data -> log.info("# onNext: {}", data), // 15:58:13.329 [main] INFO - # onNext: 3 x 10 = 30
                 error -> log.info("# onError: {}", error.getMessage()),
