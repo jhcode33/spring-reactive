@@ -16,6 +16,7 @@ public class Example9_4 {
         Sinks.One<String> sinkOne = Sinks.one();
         Mono<String> mono = sinkOne.asMono();
 
+        // 하나의 데이터만 처리하므로 backpressure가 발생하지 않는다
         sinkOne.emitValue("Hello Reactor", FAIL_FAST);
         sinkOne.emitValue("Hi Reactor", FAIL_FAST);
         sinkOne.emitValue(null, FAIL_FAST);

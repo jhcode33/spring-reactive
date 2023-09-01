@@ -16,16 +16,22 @@ public class Example9_2 {
     public static void main(String[] args) throws InterruptedException {
         int tasks = 6;
 
+        // One : 데이터가 단수, Many : 데이터가 복수 == 데이터 타입
+        // unicast() : 구독자가 하나(1:1)
         Sinks.Many<String> unicastSink = Sinks.many().unicast().onBackpressureBuffer();
+
+        // 원본 Flux는 따로 있고 View를 반환받음, 원본 데이터로 접근하는 것이 아니다
         Flux<String> fluxView = unicastSink.asFlux();
         IntStream
                 .range(1, tasks)
                 .forEach(n -> {
                     try {
                         new Thread(() -> {
+                            // target
+                            // Runnable의 run method를 구현함
                             unicastSink.emitNext(doTask(n), Sinks.EmitFailureHandler.FAIL_FAST);
                             log.info("# emitted: {}", n);
-                        }).start();
+                        }).start(); // run
                         Thread.sleep(100L);
                     } catch (InterruptedException e) {
                         log.error(e.getMessage());
@@ -37,7 +43,10 @@ public class Example9_2 {
                 .map(result -> result + " success!")
                 .doOnNext(n -> log.info("# map(): {}", n))
                 .publishOn(Schedulers.parallel())
-                .subscribe(data -> log.info("# onNext: {}", data));
+                .subscribe(
+                        // onNext()
+                        data -> log.info("# onNext: {}", data)
+                );
 
         Thread.sleep(200L);
     }
