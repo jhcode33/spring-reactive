@@ -1,10 +1,12 @@
 package chapter9;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
 import java.util.List;
 
+@Slf4j
 public class FluxPushExample {
 
     // 이벤트 리스너 인터페이스 정의
@@ -40,10 +42,13 @@ public class FluxPushExample {
         MyEventProcessor myEventProcessor = new MyEventProcessor();
 
         Flux<String> bridge = Flux.push(sink -> {
+
             myEventProcessor.register(new SingleThreadEventListener<String>() {
 
+                // SingleThreadEventListener를 구현함
                 public void onDataChunk(List<String> chunk) {
                     for (String s : chunk) {
+                        log.info("onDataChunk");
                         sink.next(s);
                     }
                 }
@@ -59,7 +64,8 @@ public class FluxPushExample {
         });
 
         bridge.subscribe(
-                data -> System.out.println("Received: " + data),
+                //data -> System.out.println("Received: " + data),
+                data -> log.info("Received: " + data),
                 err -> System.err.println("Error: " + err.getMessage()),
                 () -> System.out.println("Stream completed")
         );

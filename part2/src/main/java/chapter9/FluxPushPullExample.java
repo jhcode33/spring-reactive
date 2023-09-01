@@ -39,25 +39,30 @@ public class FluxPushPullExample {
     public static void main(String[] args) {
         MyMessageProcessor myMessageProcessor = new MyMessageProcessor();
 
+        // push
         Flux<String> bridge = Flux.create(sink -> {
             // register MyMessageListener
             myMessageProcessor.register(messages -> {
                 log.info("called onMessage");
 
                 for (String s : messages) {
+                    // push
                     sink.next(s); // The remaining messages that arrive asynchronously later are also delivered.
                 }
             });
 
-            sink.onRequest(n -> {
+            // pull : 데이터를 요청함
+            sink.onRequest(n -> { // 'n' is request method of Subscription to pull : 데이터를 요청함
                 if (n == Long.MAX_VALUE) {
-                    log.warn("Unlimited request detected. Limiting to 1000 messages.");
+                    log.warn("Unlimited request detected. Limiting to 10 messages.");
                     n = 10; // or another reasonable limit
                 }
 
+                // call
                 List<String> messages = myMessageProcessor.getHistory(n); // Poll for messages when requests are made.
                 for (String s : messages) {
                     log.info("onRequest: message = {}", s);
+                    // push
                     sink.next(s); // If messages are available immediately, push them to the sink.
                 }
             });
@@ -70,6 +75,7 @@ public class FluxPushPullExample {
         );
 
         // 메시지 발송 시뮬레이션
+        // 비동기로 처리할 수 없음, push & call 방식 중 하나만 사용 가능
 //        myMessageProcessor.dispatchMessages();
     }
 }
