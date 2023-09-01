@@ -58,6 +58,12 @@ public class FluxPushPullExample {
                     n = 10; // or another reasonable limit
                 }
 
+                /** Polling : Computer Science 용어
+                 *  - 컴퓨터나 제어 장치가 외부 장치가 준비 상태나 상태를 확인할 때까지 기다리는 프로세스를 말한다
+                 *    클라이언트 프로그램(MessageProcessor)이 동기 활동으로 외부 장치의 상태(MessageListener)를
+                 *    적극적으로 확인하는 것을 의미
+                 *  - 여기서 poll도 동일한 의미로 쓰인 것으로 보인다
+                 */
                 // call
                 List<String> messages = myMessageProcessor.getHistory(n); // Poll for messages when requests are made.
                 for (String s : messages) {

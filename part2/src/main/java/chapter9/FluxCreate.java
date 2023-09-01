@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 public class FluxCreate {
-    /** FluxSink는 Reactor 프레임워크에서 제공하는 인터페이스로,
+    // FluxSink는 Reactor 프레임워크에서 제공하는 인터페이스로,
     // 데이터를 프로그래밍적으로 방출할 수 있는 방법을 제공합니다.
     // Flux.create()를 사용하여 Flux 인스턴스를 생성할 때, 개발자에게 FluxSink 객체가 전달되며,
     // 이를 통해 데이터 항목들을 방출하거나 에러를 전파하거나 시퀀스를 완료하는 등의 동작을 수행할 수 있습니다.
@@ -45,7 +45,6 @@ public class FluxCreate {
     // 위 코드에서 sink는 Reactor 라이브러리 내부에서 자동으로 생성된 FluxSink 객체입니다. 이 객체를 사용해서 람다 함수 내에서 데이터를 방출하거나 다른 동작을 수행할 수 있습니다.
     //
     // 요점은, 개발자가 직접 FluxSink 객체를 만들 필요는 없습니다. Flux.create() 메서드를 사용할 때, Reactor 라이브러리가 이를 자동으로 처리해줍니다.
-    */
 
     // 리스너를 사용하여 외부 이벤트로부터 데이터를 Flux에 emit 하는 예제
     interface MyEventListener<T> {
