@@ -17,7 +17,10 @@ public class Example11_4 {
         Mono
             .deferContextual(ctx ->
                     Mono.just(ctx.get(key1) + ", " +
+                            // getOrEmpty는 key가 없을 경우의 동작을 정의
                             ctx.getOrEmpty(key2).orElse("no firstName") + " " +
+
+                            // getOrDefault는 key가 없을 경우 기본으로 출력될 값을 지정
                             ctx.getOrDefault(key3, "no lastName"))
             )
             .publishOn(Schedulers.parallel())

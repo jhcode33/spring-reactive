@@ -22,6 +22,8 @@ public class Example11_6 {
             .publishOn(Schedulers.parallel())
             .contextWrite(context -> context.put(key2, "Bill"))
             .transformDeferredContextual((mono, ctx) ->
+                    // context는 operator이 아래에서 위로 적용된다, 따라서 key2를 쓰는 contextWrite()가 있지만
+                    // getOrDefault() 메소드로 read할 때 읽을 수가 없어서 default로 data가 생성된다
                     mono.map(data -> data + ", " + ctx.getOrDefault(key2, "Steve"))
             )
             .contextWrite(context -> context.put(key1, "Apple"))

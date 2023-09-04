@@ -27,10 +27,12 @@ public class Example12_1 {
         Hooks.onOperatorDebug();
 
         Flux
-                .fromArray(new String[]{"BANANAS", "APPLES", "PEARS", "MELONS"})
+                .fromArray(new String[]{"BANANAS", "APPLES", "PEARS", "MELONS"}) // MELONS -> GRAPE
                 .subscribeOn(Schedulers.boundedElastic())
                 .publishOn(Schedulers.parallel())
                 .map(String::toLowerCase)
+
+                // substring은 endIndex를 포함하지 않는다
                 .map(fruit -> fruit.substring(0, fruit.length() - 1))
                 .map(fruits::get)
                 .map(translated -> "맛있는 " + translated)

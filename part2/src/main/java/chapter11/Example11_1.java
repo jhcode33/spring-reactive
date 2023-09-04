@@ -16,6 +16,7 @@ import reactor.core.scheduler.Schedulers;
 public class Example11_1 {
     public static void main(String[] args) throws InterruptedException {
         Mono
+            // ctx는 context view이다
             .deferContextual(ctx ->
                 Mono
                     .just("Hello" + " " + ctx.get("firstName"))
@@ -26,6 +27,7 @@ public class Example11_1 {
             .transformDeferredContextual(
                     (mono, ctx) -> mono.map(data -> data + " " + ctx.get("lastName"))
             )
+            // downstream -> upstream
             .contextWrite(context -> context.put("lastName", "Jobs"))
             .contextWrite(context -> context.put("firstName", "Steve"))
             .subscribe(data -> log.info("# onNext: {}", data));
