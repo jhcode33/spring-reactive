@@ -17,6 +17,7 @@ public class Example10_6 {
         Flux
             .fromArray(new Integer[] {1, 3, 5, 7})
             .doOnNext(data -> log.info("# doOnNext fromArray: {}", data))
+            // Schedulers.parallel() method가 생성한 worker thread를 통해서 아래 코드들이 실행됨
             .publishOn(Schedulers.parallel())
             .filter(data -> data > 3)
             .doOnNext(data -> log.info("# doOnNext filter: {}", data))

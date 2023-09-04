@@ -24,6 +24,7 @@ public class Example10_10 {
 
     private static Flux<Integer> doTask(String taskName) {
         return Flux.fromArray(new Integer[] {1, 3, 5, 7})
+                // only one thread
                 .publishOn(Schedulers.single())
                 .filter(data -> data > 3)
                 .doOnNext(data -> log.info("# {} doOnNext filter: {}", taskName, data))

@@ -16,10 +16,14 @@ public class Example10_8 {
     public static void main(String[] args) throws InterruptedException {
         Flux
             .fromArray(new Integer[] {1, 3, 5, 7})
+
+            // boundedElastic-1 thread
             .subscribeOn(Schedulers.boundedElastic())
             .doOnNext(data -> log.info("# doOnNext fromArray: {}", data))
             .filter(data -> data > 3)
             .doOnNext(data -> log.info("# doOnNext filter: {}", data))
+
+            // parallel-1 thread
             .publishOn(Schedulers.parallel())
             .map(data -> data * 10)
             .doOnNext(data -> log.info("# doOnNext map: {}", data))

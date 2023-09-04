@@ -15,6 +15,8 @@ public class Example10_5 {
     public static void main(String[] args) {
         Flux
             .fromArray(new Integer[] {1, 3, 5, 7})
+            // doOnNext()는 데이터 스트림의 요소를 수정하지 않고도
+            // 해당 요소를 관찰하거나 디버깅하고, 메트릭 수집 및 기타 부작용을 수행하는 데 사용되는 연산자
             .doOnNext(data -> log.info("# doOnNext fromArray: {}", data))
             .filter(data -> data > 3)
             .doOnNext(data -> log.info("# doOnNext filter: {}", data))

@@ -18,6 +18,8 @@ public class Example10_9 {
             .publishOn(Schedulers.parallel())
             .filter(data -> data > 3)
             .doOnNext(data -> log.info("# doOnNext filter: {}", data))
+
+            // 현재 thread에서 실행한다
             .publishOn(Schedulers.immediate())
             .map(data -> data * 10)
             .doOnNext(data -> log.info("# doOnNext map: {}", data))

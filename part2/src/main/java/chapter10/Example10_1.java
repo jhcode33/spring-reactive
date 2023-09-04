@@ -12,8 +12,13 @@ import reactor.core.scheduler.Schedulers;
 public class Example10_1 {
     public static void main(String[] args) throws InterruptedException {
         Flux.fromArray(new Integer[] {1, 3, 5, 7})
+                // publisher의 Thread를 지정함
+                // publisher가 데이터를 emit할 때 사용할 Thread를 지정함
+                // 구독 단계에서의 Thread를 제어함
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(data -> log.info("# doOnNext: {}", data))
+
+                //main Thread
                 .doOnSubscribe(subscription -> log.info("# doOnSubscribe"))
                 .subscribe(data -> log.info("# onNext: {}", data));
 
