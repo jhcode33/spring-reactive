@@ -13,6 +13,7 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 public class Example10_11 {
     public static void main(String[] args) throws InterruptedException {
+        // Non-Blocking이기 때문에 실행 순서를 장담할 수 없다
         doTask("task1")
                 .subscribe(data -> log.info("# onNext: {}", data));
 

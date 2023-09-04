@@ -14,12 +14,17 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 public class Example10_7 {
     public static void main(String[] args) throws InterruptedException {
+        // main thread
         Flux
             .fromArray(new Integer[] {1, 3, 5, 7})
             .doOnNext(data -> log.info("# doOnNext fromArray: {}", data))
+
+            // parallel-2 thread
             .publishOn(Schedulers.parallel())
             .filter(data -> data > 3)
             .doOnNext(data -> log.info("# doOnNext filter: {}", data))
+
+            // parallel-1 thread
             .publishOn(Schedulers.parallel())
             .map(data -> data * 10)
             .doOnNext(data -> log.info("# doOnNext map: {}", data))

@@ -14,8 +14,13 @@ import reactor.core.scheduler.Schedulers;
 public class Example10_3 {
     public static void main(String[] args) throws InterruptedException {
         Flux.fromArray(new Integer[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19})
+                // 병렬로 처리할 flux의 개수를 지정한다
                 .parallel(4)
-                .runOn(Schedulers.parallel())
+
+                // 실행된 thread 스케줄러를 지정한다
+                .runOn(
+                        // Schedulers.parallel()은 현재 CPU 코어의 수에 따라서 worker 스레드를 생성
+                        Schedulers.parallel())
                 .subscribe(data -> log.info("# onNext: {}", data));
 
         Thread.sleep(100L);

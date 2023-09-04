@@ -12,8 +12,16 @@ import reactor.core.scheduler.Schedulers;
 public class Example10_2 {
     public static void main(String[] args) throws InterruptedException {
         Flux.fromArray(new Integer[] {1, 3, 5, 7})
+
+                // main Thread
+                // hook method
                 .doOnNext(data -> log.info("# doOnNext: {}", data))
+
+                // main Thread : 1회
                 .doOnSubscribe(subscription -> log.info("# doOnSubscribe"))
+
+                // onNext, onComplete, onError를 실행할 때
+                // thread를 생성하여 코드들이 해당 thread에서 실행되도록 한다
                 .publishOn(Schedulers.parallel())
                 .subscribe(data -> log.info("# onNext: {}", data));
 
