@@ -22,6 +22,8 @@ public class Example14_17 {
         Flux
             .fromIterable(SampleData.coronaVaccineNames)
             .filterWhen(vaccine -> Mono
+                                    // Test each value emitted by this Flux asynchronously using
+                                    // a generated Publisher<Boolean> test.
                                     .just(vaccineMap.get(vaccine).getT2() >= 3_000_000)
                                     .publishOn(Schedulers.parallel()))
             .subscribe(data -> log.info("# onNext: {}", data));

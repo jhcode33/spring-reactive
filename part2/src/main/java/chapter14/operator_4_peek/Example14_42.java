@@ -18,10 +18,13 @@ public class Example14_42 {
             .doOnNext(data -> log.info("# range > doOnNext(): {}", data))
             .doOnRequest(data -> log.info("# doOnRequest: {}", data))
             .doOnSubscribe(subscription -> log.info("# doOnSubscribe 1"))
+
+            // 구독 시점 전에 출력됨
             .doFirst(() -> log.info("# doFirst()"))
             .filter(num -> num % 2 == 1)
             .doOnNext(data -> log.info("# filter > doOnNext(): {}", data))
             .doOnComplete(() -> log.info("# doOnComplete()"))
+
             .subscribe(new BaseSubscriber<>() {
                 @Override
                 protected void hookOnSubscribe(Subscription subscription) {
