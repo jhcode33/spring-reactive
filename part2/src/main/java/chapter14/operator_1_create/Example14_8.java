@@ -14,10 +14,12 @@ import java.util.stream.Stream;
 @Slf4j
 public class Example14_8 {
     public static void main(String[] args) {
-        Path path = Paths.get("D:\\resources\\using_example.txt");
+        Path path = Paths.get("C:\\Users\\jhcode33\\ProjectAll\\intellij\\Spring-Reactive\\part2\\src\\main\\java\\chapter14\\operator_1_create\\using_example.txt");
 
         Flux
-            .using(() -> Files.lines(path), Flux::fromStream, Stream::close)
+            .using(() -> Files.lines(path), // resource create
+                    Flux::fromStream,       // resource use
+                    Stream::close)          // resource close
             .subscribe(log::info);
     }
 }

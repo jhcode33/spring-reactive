@@ -19,6 +19,7 @@ public class ExampleTest13_4 {
                 .expectNext(3)
                 .expectNext(4)
 //                .expectNext(1, 2, 3, 4)
+                //에러가 날 것을 예상
                 .expectError()
                 .verify();
     }

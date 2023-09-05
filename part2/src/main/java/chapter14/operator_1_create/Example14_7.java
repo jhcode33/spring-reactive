@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- * defer 예제
+ * delayElement 예제
  */
 @Slf4j
 public class Example14_7 {
@@ -15,9 +15,15 @@ public class Example14_7 {
         log.info("# start: {}", LocalDateTime.now());
         Mono
             .just("Hello")
+            // 지연
             .delayElement(Duration.ofSeconds(3))
-            .switchIfEmpty(sayDefault())
-//            .switchIfEmpty(Mono.defer(() -> sayDefault()))
+
+            // sayDefault() 메소드는 파라미터로 전달되는 시점에서 평가(Eager Evaluation)
+            // 따라서 sayDefault()가 먼저 수행된다
+            .switchIfEmpty(sayDefault()) //Eager Evaluation
+
+            // 실제 Mono가 비어있을 경우에만 호출되는 코드로 만들려면 아래와 같이 해야한다
+//            .switchIfEmpty(Mono.defer(() -> sayDefault())) // Lazy Evaluation
             .subscribe(data -> log.info("# onNext: {}", data));
 
         Thread.sleep(3500);

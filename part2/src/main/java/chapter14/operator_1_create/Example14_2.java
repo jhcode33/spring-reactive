@@ -12,7 +12,9 @@ public class Example14_2 {
     public static void main(String[] args) {
         Flux
                 .fromIterable(SampleData.coins)
-                .subscribe(coin ->
+                .subscribe(
+                        // onNext
+                        coin ->
                         log.info("coin 명: {}, 현재가: {}", coin.getT1(), coin.getT2())
                 );
     }
