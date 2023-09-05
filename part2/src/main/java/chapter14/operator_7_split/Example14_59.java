@@ -4,6 +4,7 @@ import chapter14.SampleData;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * split 예제
@@ -15,9 +16,13 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class Example14_59 {
     public static void main(String[] args) {
+        // List의 요소를 순회하면서 Flux<Book>를 만든다
         Flux.fromIterable(SampleData.books)
+
+                // 만들어진 Flux<Book>를 book.getAuthorName()을 key로 해서 묶고 하나의 Flux로 반환한다
                 .groupBy(book -> book.getAuthorName())
 
+                // flatMap은 전달된 데이터를 비동기적으로 변환하고 하나의 Flux를 생성한다
                 // groupedFlux : Flux<GroupedFlux<String, Book>>
                 .flatMap(groupedFlux ->
                     Mono
@@ -26,7 +31,7 @@ public class Example14_59 {
 
                         // Mono<String> + Mono<Integer>
                         .zipWith(
-                            // other Mono of zipWith -> Mono<Integer>, 2개 생성, 동일한 작가가 쓴 책이 2개
+                            // other Mono of zipWith : Mono<Integer>, 2개 생성, 동일한 작가가 쓴 책이 2개
                             groupedFlux
                                 .doOnNext(book -> log.info("# who: {}", book.getAuthorName()))
                                 //"Advance Java",         "Tom", "Tom-boy", 25000, 100
