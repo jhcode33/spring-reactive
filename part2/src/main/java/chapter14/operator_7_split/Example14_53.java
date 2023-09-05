@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 public class Example14_53 {
     public static void main(String[] args) {
         Flux.range(1, 11)
+                // data를 3개씩 분할해서 하나의 Flux<>로 만든다
                 .window(3)
                 .flatMap(flux -> {
                     log.info("======================");

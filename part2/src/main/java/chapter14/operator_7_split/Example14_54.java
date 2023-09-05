@@ -18,8 +18,15 @@ import reactor.math.MathFlux;
 public class Example14_54 {
     public static void main(String[] args) {
         Flux.fromIterable(SampleData.monthlyBookSales2021)
+
                 .window(3)
-                .flatMap(flux -> MathFlux.sumInt(flux))
+
+                // sumInt() : 합계를 계산함
+                .flatMap(flux -> {
+                    log.info("flatMap");
+                    return MathFlux.sumInt(flux);
+                    }
+                )
                 .subscribe(new BaseSubscriber<>() {
                     @Override
                     protected void hookOnSubscribe(Subscription subscription) {

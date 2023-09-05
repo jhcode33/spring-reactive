@@ -14,11 +14,13 @@ import reactor.core.publisher.Flux;
 public class Example14_57 {
     public static void main(String[] args) {
         Flux.fromIterable(SampleData.books)
+                // data의 AuthorName을 key로 하여 동일한 key를 가진 데이터를 group으로 묶는다
                 .groupBy(book -> book.getAuthorName())
                 .flatMap(groupedFlux ->
                         groupedFlux
                                 .map(book -> book.getBookName() +
                                         "(" + book.getAuthorName() + ")")
+                                // Flux<map>으로 반환된 값을 list로 모아서 전달한다
                                 .collectList()
                 )
                 .subscribe(bookByAuthor ->

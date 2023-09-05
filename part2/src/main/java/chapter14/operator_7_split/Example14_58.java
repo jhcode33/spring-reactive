@@ -16,7 +16,10 @@ public class Example14_58 {
     public static void main(String[] args) {
         Flux.fromIterable(SampleData.books)
                 .groupBy(book ->
+                        // keyMapper
                         book.getAuthorName(),
+
+                        // valueMapper
                         book -> book.getBookName() + "(" + book.getAuthorName() + ")")
                 .flatMap(groupedFlux -> groupedFlux.collectList())
                 .subscribe(bookByAuthor ->

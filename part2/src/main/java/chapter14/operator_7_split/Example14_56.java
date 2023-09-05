@@ -20,14 +20,17 @@ public class Example14_56 {
             .map(num -> {
                 try {
                     if (num < 10) {
+                        // 10보다 작은 수는 100 millisecond 만큼 지연된다
                         Thread.sleep(100L);
                     } else {
+                        // 10 이상의 수는 300 millisecond 만큼 지연된다
                         Thread.sleep(300L);
                     }
                 } catch (InterruptedException e) {}
                 return num;
             })
             .bufferTimeout(3, Duration.ofMillis(400L))
-            .subscribe(buffer -> log.info("# onNext: {}", buffer));
+            .elapsed()
+            .subscribe(buffer -> log.info("# onNext: {}, # time: {}", buffer.getT2(), buffer.getT1()));
     }
 }

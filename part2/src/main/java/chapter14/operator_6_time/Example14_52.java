@@ -37,7 +37,7 @@ public class Example14_52 {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-
+        // defer : subscribe() 요청이 되었을 때, 해당 데이터가 생성됨
         Mono.defer(() -> Mono.just(
                             restTemplate
                                     .exchange(worldTimeUri,
@@ -46,8 +46,13 @@ public class Example14_52 {
                                             String.class)
                         )
                 )
+
+                // 반복적으로 구독한다, 반복할 횟수가 기본적으로 1번은 수행된다, 따라서 횟수 +1이 최종 횟수다
                 .repeat(4)
                 .elapsed()
+
+                // 5번 반복했기 때문에 해당 값들을 Flux<Map> 형태로 만들고
+                // key, value 값을 출력한다.
                 .map(response -> {
                     DocumentContext jsonContext =
                             JsonPath.parse(response.getT2().getBody());
@@ -55,7 +60,10 @@ public class Example14_52 {
                     return Tuples.of(dateTime, response.getT1());
                 })
                 .subscribe(
-                        data -> log.info("now: {}, elapsed time: {}", data.getT1(), data.getT2()),
+                        data -> {
+                            log.info("================== count: {} ========================");
+                            log.info("now: {}, elapsed time: {}", data.getT1(), data.getT2());
+                        },
                         error -> log.error("# onError:", error),
                         () -> log.info("# onComplete")
                 );
