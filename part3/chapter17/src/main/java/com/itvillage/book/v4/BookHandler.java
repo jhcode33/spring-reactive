@@ -21,14 +21,17 @@ public class BookHandler {
         this.validator = validator;
     }
 
+    // HandlerFunction Mono<T> handle(ServerRequest request); 의 구현부
     public Mono<ServerResponse> createBook(ServerRequest request) {
         return request.bodyToMono(BookDto.Post.class)
                 .doOnNext(post -> validator.validate(post))
+
+                // Post를 가지고 서비스 로직을 처리한 Mono를 생성
                 .map(post -> mapper.bookPostToBook(post))
                 .flatMap(book -> ServerResponse
+                        // static method
                         .created(URI.create("/v4/books/" + book.getBookId()))
                         .build());
-
     }
 
     public Mono<ServerResponse> updateBook(ServerRequest request) {

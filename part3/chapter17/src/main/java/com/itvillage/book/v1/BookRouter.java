@@ -10,6 +10,8 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class BookRouter {
     @Bean
     public RouterFunction<?> routeBookV1(BookHandler handler) {
+
+        // 해당 URI로 요청될 경우, 메소드 참조를 통해 해당 코드가 실행됨
         return route()
                 .POST("/v1/books", handler::createBook)
                 .PATCH("/v1/books/{book-id}", handler::updateBook)

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class BookDto {
+    // controller와 service 계층 간의 데이터 전송을 위한 클래스
     @Getter
     public static class Post {
         private String titleKorean;

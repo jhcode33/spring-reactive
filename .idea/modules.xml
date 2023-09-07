@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/part2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/part2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-mvc-branchoffice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-mvc-branchoffice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-mvc-headoffice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-mvc-headoffice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-reactive-branchoffice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-reactive-branchoffice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-reactive-headoffice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-reactive-headoffice.main.iml" />
+    </modules>
+  </component>
+</project>

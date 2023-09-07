@@ -17,16 +17,21 @@ public class BookHandler {
         this.mapper = mapper;
     }
 
+    // ServerRequest : headers & body of HTTP Request
     public Mono<ServerResponse> createBook(ServerRequest request) {
-        return request.bodyToMono(BookDto.Post.class)
+        return
+                // request body를 통해서 Mono 생성
+                request.bodyToMono(BookDto.Post.class)
+
                 .map(post -> mapper.bookPostToBook(post))
                 .flatMap(book ->
                         ServerResponse
-                                .created(URI.create("/v1/books/" + book.getBookId()))
-                                .build());
+                                .created(URI.create("/v1/books/" + book.getBookId())) // "/v1/books/{bookId}
+                                .build()); // create Mono<ServerResponse>
     }
 
     public Mono<ServerResponse> getBook(ServerRequest request) {
+        // pathVariable : 동일한 key의 value를 반환
         long bookId = Long.valueOf(request.pathVariable("book-id"));
         Book book =
                 new Book(bookId,
@@ -41,6 +46,7 @@ public class BookHandler {
         return ServerResponse
                             .ok()
                             .bodyValue(mapper.bookToResponse(book))
+                            // Mono의 데이터가 비어있을 경우 -> ServerResponse 404 생성
                             .switchIfEmpty(ServerResponse.notFound().build());
     }
 
@@ -53,6 +59,7 @@ public class BookHandler {
                     return mapper.bookPatchToBook(patch);
                 })
                 .flatMap(book -> ServerResponse.ok()
+                        // bodyValue : return Mono<ServerResponse>
                         .bodyValue(mapper.bookToResponse(book)));
     }
 

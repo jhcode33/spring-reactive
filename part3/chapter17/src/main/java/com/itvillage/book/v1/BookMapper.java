@@ -5,6 +5,7 @@ import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
+// MapStruct를 사용해 자동으로 매필 구현체를 생성하는 인터페이스
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         implementationName = "bookMapperV1")
 public interface BookMapper {
